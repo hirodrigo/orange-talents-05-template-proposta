@@ -21,7 +21,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CPFOrCNPJ {
 
-	String message() default "O CPF ou CNPJ inserido é inválido.";
+	String message() default "- O CPF ou CNPJ inserido é inválido.";
 
 	Class<?>[] groups() default {};
 
