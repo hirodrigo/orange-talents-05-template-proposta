@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(value = "consulta", url = "${consulta.uri}")
+@FeignClient(value = "SolicitacaoAPIConsulta", url = "${consulta.uri}")
 public interface IntegracaoAPIConsulta {
 
 	@PostMapping("/api/solicitacao")
