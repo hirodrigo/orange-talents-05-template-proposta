@@ -3,6 +3,8 @@ package br.com.zupacademy.rodrigo.proposta.proposta;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +40,9 @@ public class Proposta {
 	@PositiveOrZero
 	private BigDecimal salario;
 
+	@Enumerated(EnumType.STRING)
+	private StatusProposta status;
+
 	/**
 	 * No argument constructor for Hibernate, should not be used.
 	 */
@@ -53,8 +58,21 @@ public class Proposta {
 		this.endereco = endereco;
 		this.salario = salario;
 	}
-	
+
+	public void setStatus(StatusProposta status) {
+		this.status = status;
+	}
+
 	public Long getId() {
 		return id;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
 }

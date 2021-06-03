@@ -1,6 +1,7 @@
 package br.com.zupacademy.rodrigo.proposta.proposta;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -23,6 +24,9 @@ public class PropostaController {
 	@Autowired
 	private PropostaRepository propostaRepository;
 
+	@Autowired
+	private List<EventoNovaProposta> eventosNovaProposta;
+
 	@PostMapping
 	@Transactional
 	private ResponseEntity<?> createProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder ucb) {
@@ -31,8 +35,14 @@ public class PropostaController {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
 					"O documento informado já foi cadastrado anteriormente em uma outra proposta.");
 		}
+
 		Proposta proposta = request.toModel();
 		propostaRepository.save(proposta);
+
+		for (EventoNovaProposta evento : eventosNovaProposta) {
+			evento.executar(proposta);
+		}
+
 		URI uri = ucb.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
