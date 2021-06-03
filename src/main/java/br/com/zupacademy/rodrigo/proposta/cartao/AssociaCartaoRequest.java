@@ -1,29 +1,29 @@
-package br.com.zupacademy.rodrigo.proposta.proposta.consultadadossolicitante;
+package br.com.zupacademy.rodrigo.proposta.cartao;
 
 import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
 
-public class ConsultaRequest {
+public class AssociaCartaoRequest {
 
 	private Long idProposta;
-	private String nome;
 	private String documento;
+	private String nome;
 
-	public ConsultaRequest(Proposta proposta) {
+	public AssociaCartaoRequest(Proposta proposta) {
 		this.idProposta = proposta.getId();
-		this.nome = proposta.getNome();
 		this.documento = proposta.getDocumento();
+		this.nome = proposta.getNome();
 	}
 
 	public Long getIdProposta() {
 		return idProposta;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
 	public String getDocumento() {
 		return documento;
+	}
+
+	public String getNome() {
+		return nome;
 	}
 
 }

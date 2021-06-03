@@ -14,17 +14,17 @@ import feign.FeignException;
 public class ConsultaDadosSolicitante implements EventoNovaProposta {
 
 	@Autowired
-	private IntegracaoAPIConsulta integracao;
+	private ConsultaClient client;
 
 	@Autowired
 	private PropostaRepository propostaRepository;
 
 	@Override
 	public void executar(Proposta proposta) {
-		ConsultaRequest request = new ConsultaRequest(proposta);
+		ConsultaDadosRequest request = new ConsultaDadosRequest(proposta);
 		try {
-			ResponseEntity<ConsultaResponse> responseEntity = integracao.consultar(request);
-			ConsultaResponse response = responseEntity.getBody();
+			ResponseEntity<ConsultaDadosResponse> responseEntity = client.consultar(request);
+			ConsultaDadosResponse response = responseEntity.getBody();
 			proposta.setStatus(response.getResultadoSolicitacao());
 		} catch (FeignException e) {
 			proposta.setStatus(StatusProposta.NAO_ELEGIVEL);

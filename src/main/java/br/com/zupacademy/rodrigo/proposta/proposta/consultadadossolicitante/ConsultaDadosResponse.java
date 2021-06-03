@@ -2,7 +2,7 @@ package br.com.zupacademy.rodrigo.proposta.proposta.consultadadossolicitante;
 
 import br.com.zupacademy.rodrigo.proposta.proposta.StatusProposta;
 
-public class ConsultaResponse {
+public class ConsultaDadosResponse {
 
 	private String resultadoSolicitacao;
 

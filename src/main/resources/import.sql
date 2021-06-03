@@ -1,0 +1,2 @@
+INSERT INTO proposta (documento, email, endereco, nome, salario, status) VALUES ("44848718074", "proposta1@email.com", "Rua da Proposta 1", "Nome da Proposta 1", 1000.00, "ELEGIVEL");
+INSERT INTO proposta (documento, email, endereco, nome, salario, status) VALUES ("39652101060", "proposta2@email.com", "Rua da Proposta 2", "Nome da Proposta 2", 1500.00, "NAO_ELEGIVEL");
