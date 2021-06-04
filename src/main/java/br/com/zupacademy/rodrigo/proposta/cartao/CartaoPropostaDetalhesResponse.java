@@ -14,7 +14,7 @@ public class CartaoPropostaDetalhesResponse {
 	private BigDecimal limite;
 	
 	public CartaoPropostaDetalhesResponse(Cartao cartao) {
-		this.nCartao = cartao.getId();
+		this.nCartao = cartao.getnCartao();
 		this.emitidoEm = cartao.getEmitidoEm();
 		this.titular = cartao.getTitular();
 		this.limite = cartao.getLimite();

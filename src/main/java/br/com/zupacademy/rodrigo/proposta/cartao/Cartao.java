@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -15,7 +17,11 @@ import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
 public class Cartao {
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@NotNull
+	private String nCartao;
 	
 	@NotNull
 	private LocalDateTime emitidoEm;
@@ -29,9 +35,9 @@ public class Cartao {
 	@OneToOne
 	Proposta proposta;
 
-	public Cartao(String id, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
+	public Cartao(String nCartao, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
 			Proposta proposta) {
-		this.id = id;
+		this.nCartao = nCartao;
 		this.emitidoEm = emitidoEm;
 		this.titular = titular;
 		this.limite = limite;
@@ -45,8 +51,8 @@ public class Cartao {
 	public Cartao() {
 	}
 
-	public String getId() {
-		return id;
+	public String getnCartao() {
+		return nCartao;
 	}
 
 	public LocalDateTime getEmitidoEm() {
