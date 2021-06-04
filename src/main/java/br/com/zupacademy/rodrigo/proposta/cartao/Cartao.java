@@ -44,5 +44,25 @@ public class Cartao {
 	@Deprecated
 	public Cartao() {
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public LocalDateTime getEmitidoEm() {
+		return emitidoEm;
+	}
+
+	public String getTitular() {
+		return titular;
+	}
+
+	public BigDecimal getLimite() {
+		return limite;
+	}
+
+	public Proposta getProposta() {
+		return proposta;
+	}
 	
 }
