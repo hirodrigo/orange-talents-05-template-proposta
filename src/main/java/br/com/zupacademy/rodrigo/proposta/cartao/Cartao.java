@@ -15,7 +15,10 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import org.springframework.lang.Nullable;
+
 import br.com.zupacademy.rodrigo.proposta.biometria.Biometria;
+import br.com.zupacademy.rodrigo.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
 
 @Entity
@@ -45,6 +48,10 @@ public class Cartao {
 
 	@OneToMany(mappedBy = "cartao", cascade = CascadeType.PERSIST)
 	private Set<Biometria> biometrias;
+	
+	@OneToOne(mappedBy = "cartao", cascade = CascadeType.PERSIST)
+	@Nullable
+	private Bloqueio bloqueio;
 
 	public Cartao(String nCartao, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
 			Proposta proposta) {
@@ -88,6 +95,14 @@ public class Cartao {
 	
 	public void adicionarBiometria(Biometria biometria) {
 		this.biometrias.add(biometria);
+	}
+	
+	public void bloquearCartao(Bloqueio bloqueio) {
+		this.bloqueio = bloqueio;
+	}
+	
+	public boolean estaBloqueado() {
+		return this.bloqueio != null;
 	}
 
 }

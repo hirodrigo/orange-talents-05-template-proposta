@@ -1,2 +1,4 @@
 INSERT INTO proposta (uuid, documento, email, endereco, nome, salario, status) VALUES ("f934476c-8bda-4cb4-9895-41b0a42fa83a", "44848718074", "proposta1@email.com", "Rua da Proposta 1", "Nome da Proposta 1", 1000.00, "ELEGIVEL");
 INSERT INTO proposta (uuid, documento, email, endereco, nome, salario, status) VALUES ("6dfe4708-104e-488d-86a7-64f5e0ec82da", "39652101060", "proposta2@email.com", "Rua da Proposta 2", "Nome da Proposta 2", 1500.00, "NAO_ELEGIVEL");
+INSERT INTO proposta (uuid, documento, email, endereco, nome, salario, status) VALUES ("cd338b8d-a240-4b7c-af50-07ce3741fe54", "67862747062", "proposta3@email.com", "Rua da Proposta 3", "Nome da Proposta 3", 2000.00, "ELEGIVEL");
+INSERT INTO cartao (emitido_em, limite, n_cartao, titular, uuid, proposta_id) VALUES ("2021-06-07 19:45:47", 4426.00, "1156-1683-3861-7976", "Nome da Proposta 1", "6568665f-edc9-4f2d-b165-9fe4258cec82", 1)
