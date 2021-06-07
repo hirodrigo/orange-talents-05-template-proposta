@@ -4,17 +4,17 @@ import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
 
 public class AssociaCartaoRequest {
 
-	private Long idProposta;
+	private String idProposta;
 	private String documento;
 	private String nome;
 
 	public AssociaCartaoRequest(Proposta proposta) {
-		this.idProposta = proposta.getId();
+		this.idProposta = proposta.getUuid();
 		this.documento = proposta.getDocumento();
 		this.nome = proposta.getNome();
 	}
 
-	public Long getIdProposta() {
+	public String getIdProposta() {
 		return idProposta;
 	}
 

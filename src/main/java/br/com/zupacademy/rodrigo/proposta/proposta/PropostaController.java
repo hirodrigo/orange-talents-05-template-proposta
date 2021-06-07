@@ -45,13 +45,13 @@ public class PropostaController {
 			evento.executar(proposta);
 		}
 
-		URI uri = ucb.path("api/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
+		URI uri = ucb.path("api/propostas/{id}").buildAndExpand(proposta.getUuid()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping("/{id}")
-	private ResponseEntity<?> showProposta(@PathVariable Long id) {
-		Optional<Proposta> possivelProposta = propostaRepository.findById(id);
+	@GetMapping("/{uuid}")
+	private ResponseEntity<?> showProposta(@PathVariable String uuid) {
+		Optional<Proposta> possivelProposta = propostaRepository.findByUuid(uuid);
 		if (possivelProposta.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

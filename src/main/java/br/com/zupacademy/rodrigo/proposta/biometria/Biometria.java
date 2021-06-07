@@ -1,6 +1,7 @@
 package br.com.zupacademy.rodrigo.proposta.biometria;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,9 @@ public class Biometria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotNull
+	private String uuid = UUID.randomUUID().toString();
 	
 	@NotBlank
 	@Base64Value
@@ -42,11 +46,9 @@ public class Biometria {
 		this.fingerprint = fingerprint;
 		this.cartao = cartao;
 	}
-	
-	public Long getId() {
-		return id;
+
+	public String getUuid() {
+		return uuid;
 	}
 	
-	
-
 }

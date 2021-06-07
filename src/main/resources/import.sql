@@ -1,2 +1,2 @@
-INSERT INTO proposta (documento, email, endereco, nome, salario, status) VALUES ("44848718074", "proposta1@email.com", "Rua da Proposta 1", "Nome da Proposta 1", 1000.00, "ELEGIVEL");
-INSERT INTO proposta (documento, email, endereco, nome, salario, status) VALUES ("39652101060", "proposta2@email.com", "Rua da Proposta 2", "Nome da Proposta 2", 1500.00, "NAO_ELEGIVEL");
+INSERT INTO proposta (uuid, documento, email, endereco, nome, salario, status) VALUES ("f934476c-8bda-4cb4-9895-41b0a42fa83a", "44848718074", "proposta1@email.com", "Rua da Proposta 1", "Nome da Proposta 1", 1000.00, "ELEGIVEL");
+INSERT INTO proposta (uuid, documento, email, endereco, nome, salario, status) VALUES ("6dfe4708-104e-488d-86a7-64f5e0ec82da", "39652101060", "proposta2@email.com", "Rua da Proposta 2", "Nome da Proposta 2", 1500.00, "NAO_ELEGIVEL");

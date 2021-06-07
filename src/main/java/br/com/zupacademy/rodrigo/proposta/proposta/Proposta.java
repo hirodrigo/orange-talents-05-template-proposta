@@ -1,6 +1,7 @@
 package br.com.zupacademy.rodrigo.proposta.proposta;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,6 +27,9 @@ public class Proposta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotNull
+	private String uuid = UUID.randomUUID().toString();
 
 	@CPFOrCNPJ
 	@NotBlank
@@ -76,8 +80,8 @@ public class Proposta {
 		this.cartao = cartao;
 	}
 
-	public Long getId() {
-		return id;
+	public String getUuid() {
+		return uuid;
 	}
 
 	public String getNome() {

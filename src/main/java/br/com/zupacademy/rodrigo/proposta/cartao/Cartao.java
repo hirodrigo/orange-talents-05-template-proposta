@@ -3,6 +3,7 @@ package br.com.zupacademy.rodrigo.proposta.cartao;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,6 +24,9 @@ public class Cartao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotNull
+	private String uuid = UUID.randomUUID().toString();
 
 	@NotNull
 	private String nCartao;
@@ -56,6 +60,10 @@ public class Cartao {
 	 */
 	@Deprecated
 	public Cartao() {
+	}
+	
+	public String getUuid() {
+		return uuid;
 	}
 
 	public String getnCartao() {

@@ -21,34 +21,35 @@ import br.com.zupacademy.rodrigo.proposta.cartao.Cartao;
 import br.com.zupacademy.rodrigo.proposta.cartao.CartaoRepository;
 
 @RestController
-@RequestMapping("/api/cartoes/{idCartao}/biometrias")
+@RequestMapping("/api/cartoes/{uuidCartao}/biometrias")
 public class BiometriaController {
-	
+
 	@Autowired
 	private CartaoRepository cartaoRepository;
-	
+
 	@Autowired
 	private BiometriaRepository biometriaRepository;
-	
+
 	@PostMapping
 	@Transactional
-	private ResponseEntity<?> createBiometria(@PathVariable Long idCartao, @RequestBody @Valid BiometriaRequest request, UriComponentsBuilder ucb) {
-		Optional<Cartao> possivelCartao = cartaoRepository.findById(idCartao);
+	private ResponseEntity<?> createBiometria(@PathVariable String uuidCartao,
+			@RequestBody @Valid BiometriaRequest request, UriComponentsBuilder ucb) {
+		Optional<Cartao> possivelCartao = cartaoRepository.findByUuid(uuidCartao);
 		if (possivelCartao.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-					"O cartão informado não existe.");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "O cartão informado não existe.");
 		}
-		
+
 		Cartao cartao = possivelCartao.get();
 
 		Biometria biometria = request.toModel(cartao);
-		
+
 		cartao.adicionarBiometria(biometria);
-		
+
 		biometriaRepository.save(biometria);
 		cartaoRepository.save(cartao);
-		
-		URI uri = ucb.path("/api/cartoes/{idCartao}/biometrias/{id}").buildAndExpand(idCartao, biometria.getId()).toUri();
+
+		URI uri = ucb.path("/api/cartoes/{uuidCartao}/biometrias/{uuidBiometria}")
+				.buildAndExpand(uuidCartao, biometria.getUuid()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
