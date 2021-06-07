@@ -45,7 +45,7 @@ public class PropostaController {
 			evento.executar(proposta);
 		}
 
-		URI uri = ucb.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
+		URI uri = ucb.path("api/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 

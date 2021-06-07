@@ -41,7 +41,7 @@ public class AssociaCartao {
 			proposta.setCartao(cartao);
 			propostaRepository.save(proposta);
 		} catch (FeignException e) {
-			logger.warn(e.contentUTF8().toString());
+			logger.warn(e.toString());
 		}
 	}
 

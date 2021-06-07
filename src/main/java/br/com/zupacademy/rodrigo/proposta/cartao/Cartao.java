@@ -2,38 +2,45 @@ package br.com.zupacademy.rodrigo.proposta.cartao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import br.com.zupacademy.rodrigo.proposta.biometria.Biometria;
 import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
 
 @Entity
 public class Cartao {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	private String nCartao;
-	
+
 	@NotNull
 	private LocalDateTime emitidoEm;
-	
+
 	@NotNull
 	private String titular;
-	
+
 	@PositiveOrZero
 	private BigDecimal limite;
-	
+
 	@OneToOne
-	Proposta proposta;
+	private Proposta proposta;
+
+	@OneToMany(mappedBy = "cartao", cascade = CascadeType.PERSIST)
+	private Set<Biometria> biometrias;
 
 	public Cartao(String nCartao, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
 			Proposta proposta) {
@@ -43,7 +50,7 @@ public class Cartao {
 		this.limite = limite;
 		this.proposta = proposta;
 	}
-	
+
 	/**
 	 * No argument constructor for Hibernate, should not be used.
 	 */
@@ -71,4 +78,8 @@ public class Cartao {
 		return proposta;
 	}
 	
+	public void adicionarBiometria(Biometria biometria) {
+		this.biometrias.add(biometria);
+	}
+
 }
