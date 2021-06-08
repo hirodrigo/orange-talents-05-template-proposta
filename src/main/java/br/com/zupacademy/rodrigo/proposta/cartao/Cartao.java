@@ -19,6 +19,7 @@ import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.lang.Nullable;
 
+import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisoViagem;
 import br.com.zupacademy.rodrigo.proposta.biometria.Biometria;
 import br.com.zupacademy.rodrigo.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
@@ -57,6 +58,10 @@ public class Cartao {
 	
 	@Enumerated(EnumType.STRING)
 	private StatusCartao status = StatusCartao.DISPONIVEL;
+	
+	@OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+	@Nullable
+	private Set<AvisoViagem> avisosViagens;
 
 	public Cartao(String nCartao, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
 			Proposta proposta) {
@@ -109,6 +114,10 @@ public class Cartao {
 	
 	public boolean estaBloqueado() {
 		return this.status == StatusCartao.BLOQUEADO;
+	}
+	
+	public void adicionarAvisoViagem(AvisoViagem avisoViagem) {
+		this.avisosViagens.add(avisoViagem);
 	}
 
 }
