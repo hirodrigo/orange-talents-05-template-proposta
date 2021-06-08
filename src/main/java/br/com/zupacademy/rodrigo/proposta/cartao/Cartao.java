@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,6 +54,9 @@ public class Cartao {
 	@OneToOne(mappedBy = "cartao", cascade = CascadeType.PERSIST)
 	@Nullable
 	private Bloqueio bloqueio;
+	
+	@Enumerated(EnumType.STRING)
+	private StatusCartao status = StatusCartao.DISPONIVEL;
 
 	public Cartao(String nCartao, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
 			Proposta proposta) {
@@ -99,10 +104,11 @@ public class Cartao {
 	
 	public void bloquearCartao(Bloqueio bloqueio) {
 		this.bloqueio = bloqueio;
+		this.status = StatusCartao.BLOQUEADO;
 	}
 	
 	public boolean estaBloqueado() {
-		return this.bloqueio != null;
+		return this.status == StatusCartao.BLOQUEADO;
 	}
 
 }
