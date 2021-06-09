@@ -33,4 +33,8 @@ public class AvisoViagemRequest {
 		return new AvisoViagem(this.destino, this.dataTermino, ipAddress, userAgent, cartao);
 	}
 
+	public AvisarViagemRequest toAPIRequest() {
+		return new AvisarViagemRequest(this.destino, this.dataTermino);
+	}
+
 }

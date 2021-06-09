@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisarViagemRequest;
 import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisoViagem;
 import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisoViagemRequest;
 import br.com.zupacademy.rodrigo.proposta.cartao.bloqueio.BloquearCartao;
@@ -30,6 +31,9 @@ public class CartaoController {
 
 	@Autowired
 	private BloquearCartao bloquearCartao;
+
+	@Autowired
+	private CartaoClient cartaoClient;
 
 	@PostMapping("/{uuid}/bloquear")
 	private ResponseEntity<?> createBloqueioCartao(@PathVariable String uuid, HttpServletRequest request) {
@@ -70,13 +74,19 @@ public class CartaoController {
 
 		Cartao cartao = possivelCartao.get();
 
+		AvisarViagemRequest avisarViagemRequest = request.toAPIRequest();
+		try {
+			cartaoClient.avisarViagem(cartao.getnCartao(), avisarViagemRequest);
+		} catch (FeignException e) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
+					"Não foi possível criar o aviso de viagem, tente novamente mais tarde.");
+		}
+
 		String ipAddress = hsr.getRemoteAddr();
 		String userAgent = hsr.getHeader("User-Agent");
 
 		AvisoViagem avisoViagem = request.toModel(ipAddress, userAgent, cartao);
-
 		cartao.adicionarAvisoViagem(avisoViagem);
-
 		cartaoRepository.save(cartao);
 
 		return ResponseEntity.ok().build();
