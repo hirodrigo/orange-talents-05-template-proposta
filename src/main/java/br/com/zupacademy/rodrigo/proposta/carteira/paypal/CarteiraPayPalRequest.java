@@ -20,6 +20,11 @@ public class CarteiraPayPalRequest implements CarteiraRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	@Override
+	public TipoCarteira getTipoCarteira() {
+		return this.tipoCarteira;
+	}
 
 	@Override
 	public Carteira toModel(String nCarteira, Cartao cartao) {

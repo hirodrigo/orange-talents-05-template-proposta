@@ -20,6 +20,7 @@ import br.com.zupacademy.rodrigo.proposta.cartao.Cartao;
 import br.com.zupacademy.rodrigo.proposta.cartao.CartaoClient;
 import br.com.zupacademy.rodrigo.proposta.cartao.CartaoRepository;
 import br.com.zupacademy.rodrigo.proposta.carteira.paypal.CarteiraPayPalRequest;
+import br.com.zupacademy.rodrigo.proposta.carteira.samsungpay.CarteiraSamsungPayRequest;
 
 @RestController
 @RequestMapping("/api/cartoes")
@@ -37,17 +38,25 @@ public class CarteiraController {
 	@PostMapping("/{uuid}/carteiras/paypal")
 	private ResponseEntity<?> createCarteiraPayPal(@PathVariable String uuid,
 			@Valid @RequestBody CarteiraPayPalRequest request, UriComponentsBuilder ucb) {
-		return createCarteira(uuid, request, ucb, TipoCarteira.PayPal);
+		return createCarteira(uuid, request, ucb);
+	}
+
+	@PostMapping("/{uuid}/carteiras/samsungpay")
+	private ResponseEntity<?> createCarteiraSamsungPay(@PathVariable String uuid,
+			@Valid @RequestBody CarteiraSamsungPayRequest request, UriComponentsBuilder ucb) {
+		return createCarteira(uuid, request, ucb);
 	}
 
 	private ResponseEntity<?> createCarteira(@PathVariable String uuid, @Valid @RequestBody CarteiraRequest request,
-			UriComponentsBuilder ucb, TipoCarteira tipoCarteira) {
+			UriComponentsBuilder ucb) {
 		Optional<Cartao> possivelCartao = cartaoRepository.findByUuid(uuid);
 		if (possivelCartao.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 
 		Cartao cartao = possivelCartao.get();
+
+		TipoCarteira tipoCarteira = request.getTipoCarteira();
 
 		Integer count = carteiraRepository.countByCartaoAndTipoCarteira(cartao, tipoCarteira);
 		if (count >= tipoCarteira.getLimiteCarteira()) {
@@ -68,7 +77,7 @@ public class CarteiraController {
 		cartao.adicionarCarteira(carteira);
 		cartaoRepository.save(cartao);
 
-		URI uri = ucb.path("api/carteiras/paypal/{nCarteira}").buildAndExpand(response.getBody().getnCarteira())
+		URI uri = ucb.path("api/carteiras/{uri}/{nCarteira}").buildAndExpand(tipoCarteira.getUri(), response.getBody().getnCarteira())
 				.toUri();
 		return ResponseEntity.created(uri).build();
 	}

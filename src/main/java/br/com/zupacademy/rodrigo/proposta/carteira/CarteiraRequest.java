@@ -7,5 +7,7 @@ public interface CarteiraRequest {
 	Carteira toModel(String nCarteira, Cartao cartao);
 	
 	AssociarCarteiraRequest toApiRequest(String ncartao);
+	
+	TipoCarteira getTipoCarteira(); 
 
 }
