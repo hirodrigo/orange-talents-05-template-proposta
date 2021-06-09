@@ -22,6 +22,7 @@ import org.springframework.lang.Nullable;
 import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisoViagem;
 import br.com.zupacademy.rodrigo.proposta.biometria.Biometria;
 import br.com.zupacademy.rodrigo.proposta.cartao.bloqueio.Bloqueio;
+import br.com.zupacademy.rodrigo.proposta.carteira.Carteira;
 import br.com.zupacademy.rodrigo.proposta.proposta.Proposta;
 
 @Entity
@@ -30,7 +31,7 @@ public class Cartao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	private String uuid = UUID.randomUUID().toString();
 
@@ -51,17 +52,21 @@ public class Cartao {
 
 	@OneToMany(mappedBy = "cartao", cascade = CascadeType.PERSIST)
 	private Set<Biometria> biometrias;
-	
+
 	@OneToOne(mappedBy = "cartao", cascade = CascadeType.PERSIST)
 	@Nullable
 	private Bloqueio bloqueio;
-	
+
 	@Enumerated(EnumType.STRING)
 	private StatusCartao status = StatusCartao.DISPONIVEL;
-	
+
 	@OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
 	@Nullable
 	private Set<AvisoViagem> avisosViagens;
+
+	@OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+	@Nullable
+	private Set<Carteira> carteiras;
 
 	public Cartao(String nCartao, @NotNull LocalDateTime emitidoEm, @NotNull String titular, BigDecimal limite,
 			Proposta proposta) {
@@ -78,7 +83,7 @@ public class Cartao {
 	@Deprecated
 	public Cartao() {
 	}
-	
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -102,22 +107,26 @@ public class Cartao {
 	public Proposta getProposta() {
 		return proposta;
 	}
-	
+
 	public void adicionarBiometria(Biometria biometria) {
 		this.biometrias.add(biometria);
 	}
-	
+
 	public void bloquearCartao(Bloqueio bloqueio) {
 		this.bloqueio = bloqueio;
 		this.status = StatusCartao.BLOQUEADO;
 	}
-	
+
 	public boolean estaBloqueado() {
 		return this.status == StatusCartao.BLOQUEADO;
 	}
-	
+
 	public void adicionarAvisoViagem(AvisoViagem avisoViagem) {
 		this.avisosViagens.add(avisoViagem);
+	}
+
+	public void adicionarCarteira(Carteira carteira) {
+		this.carteiras.add(carteira);
 	}
 
 }

@@ -10,6 +10,8 @@ import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisarViagemRequest;
 import br.com.zupacademy.rodrigo.proposta.avisoviagem.AvisarViagemResponse;
 import br.com.zupacademy.rodrigo.proposta.cartao.bloqueio.BloquearCartaoRequest;
 import br.com.zupacademy.rodrigo.proposta.cartao.bloqueio.BloquearCartaoResponse;
+import br.com.zupacademy.rodrigo.proposta.carteira.AssociarCarteiraRequest;
+import br.com.zupacademy.rodrigo.proposta.carteira.AssociarCarteiraResponse;
 
 @FeignClient(value = "CartaoClient", url = "${accounts.uri}")
 public interface CartaoClient {
@@ -22,6 +24,9 @@ public interface CartaoClient {
 	
 	@PostMapping("/api/cartoes/{nCartao}/avisos")
 	ResponseEntity<AvisarViagemResponse> avisarViagem(@PathVariable String nCartao, AvisarViagemRequest request);
+	
+	@PostMapping("/api/cartoes/{nCartao}/carteiras")
+	ResponseEntity<AssociarCarteiraResponse> associarCarteira(@PathVariable String nCartao, AssociarCarteiraRequest request);
 	
 	@GetMapping("/actuator/health")
 	ResponseEntity<Void> healthCheck(); 
