@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.zupacademy.rodrigo.proposta.metricas.MinhasMetricas;
+import io.micrometer.core.annotation.Timed;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 
@@ -38,6 +40,9 @@ public class PropostaController {
 		this.tracer = tracer;
 	}
 
+	@Autowired
+	private MinhasMetricas metricas;
+
 	@PostMapping
 	@Transactional
 	private ResponseEntity<?> createProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder ucb) {
@@ -45,7 +50,8 @@ public class PropostaController {
 		activeSpan.setTag("user.email", request.getEmail());
 		activeSpan.setBaggageItem("user.email", request.getEmail());
 		activeSpan.log("Criação de proposta para o e-mail " + request.getEmail());
-		
+		metricas.adicionarAoContador("proposta_criada");
+
 		Optional<Proposta> possivelProposta = propostaRepository.findByDocumento(request.getDocumento());
 		if (possivelProposta.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
@@ -64,6 +70,7 @@ public class PropostaController {
 	}
 
 	@GetMapping("/{uuid}")
+	@Timed(value = "consultar_proposta")
 	private ResponseEntity<?> showProposta(@PathVariable String uuid) {
 		Optional<Proposta> possivelProposta = propostaRepository.findByUuid(uuid);
 		if (possivelProposta.isEmpty()) {
