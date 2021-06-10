@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,6 @@ import javax.validation.constraints.PositiveOrZero;
 import org.springframework.lang.Nullable;
 
 import br.com.zupacademy.rodrigo.proposta.cartao.Cartao;
-import br.com.zupacademy.rodrigo.proposta.validation.CPFOrCNPJ;
 
 @Entity
 public class Proposta {
@@ -31,7 +31,6 @@ public class Proposta {
 	@NotNull
 	private String uuid = UUID.randomUUID().toString();
 
-	@CPFOrCNPJ
 	@NotBlank
 	private String documento;
 
@@ -63,9 +62,9 @@ public class Proposta {
 	public Proposta() {
 	}
 
-	public Proposta(@NotBlank String documento, @Email @NotBlank String email, @NotBlank String nome,
+	public Proposta(@NotNull @Valid DocumentoLimpo documentoLimpo, @Email @NotBlank String email, @NotBlank String nome,
 			@NotBlank String endereco, @NotNull @PositiveOrZero BigDecimal salario) {
-		this.documento = documento;
+		this.documento = documentoLimpo.encrypt();
 		this.email = email;
 		this.nome = nome;
 		this.endereco = endereco;

@@ -21,7 +21,7 @@ public class MinhasMetricas {
 
 	public MinhasMetricas(MeterRegistry meterRegistry) {
 		this.meterRegistry = meterRegistry;
-        criarGauge();
+		criarGauge();
 	}
 
 	public void adicionarAoContador(String key) {

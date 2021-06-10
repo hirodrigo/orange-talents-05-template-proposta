@@ -21,7 +21,7 @@ public class PropostaDetalhesResponse {
 	private CartaoPropostaDetalhesResponse cartao;
 
 	public PropostaDetalhesResponse(Proposta proposta) {
-		this.documento = proposta.getDocumento();
+		this.documento = DocumentoLimpo.decrypt(proposta.getDocumento());
 		this.email = proposta.getEmail();
 		this.nome = proposta.getNome();
 		this.endereco = proposta.getEndereco();

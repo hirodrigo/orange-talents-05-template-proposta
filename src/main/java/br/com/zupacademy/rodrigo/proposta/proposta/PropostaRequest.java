@@ -47,6 +47,6 @@ public class PropostaRequest {
 	}
 
 	public Proposta toModel() {
-		return new Proposta(this.documento, this.email, this.nome, this.endereco, this.salario);
+		return new Proposta(new DocumentoLimpo(this.documento), this.email, this.nome, this.endereco, this.salario);
 	}
 }
