@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+
 @RestController
 @RequestMapping("/api/propostas")
 public class PropostaController {
@@ -29,9 +32,20 @@ public class PropostaController {
 	@Autowired
 	private List<EventoNovaProposta> eventosNovaProposta;
 
+	private final Tracer tracer;
+
+	public PropostaController(Tracer tracer) {
+		this.tracer = tracer;
+	}
+
 	@PostMapping
 	@Transactional
 	private ResponseEntity<?> createProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder ucb) {
+		Span activeSpan = tracer.activeSpan();
+		activeSpan.setTag("user.email", request.getEmail());
+		activeSpan.setBaggageItem("user.email", request.getEmail());
+		activeSpan.log("Criação de proposta para o e-mail " + request.getEmail());
+		
 		Optional<Proposta> possivelProposta = propostaRepository.findByDocumento(request.getDocumento());
 		if (possivelProposta.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,

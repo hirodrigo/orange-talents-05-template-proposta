@@ -41,6 +41,10 @@ public class PropostaRequest {
 	public String getDocumento() {
 		return documento;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
 
 	public Proposta toModel() {
 		return new Proposta(this.documento, this.email, this.nome, this.endereco, this.salario);
